@@ -1,6 +1,14 @@
 # 📊 Exotic Option Pricing and Risk Analysis Using Monte Carlo Simulation
 
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.28%2B-FF4B4B?logo=streamlit&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-1.24%2B-013243?logo=numpy&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Tests](https://img.shields.io/badge/Tests-36%20passed-brightgreen)
+
 A complete quantitative finance project that prices exotic options (Asian, Barrier, Lookback) using Monte Carlo simulation, analyzes risk through Greeks, and provides an interactive Streamlit dashboard.
+
+---
 
 ## 👥 Team Members
 
@@ -10,11 +18,13 @@ A complete quantitative finance project that prices exotic options (Asian, Barri
 | **Sovan Pal** | Greeks, Validation & Risk Analysis |
 | **Tanmoy Paul** | Dashboard, Visualization & Data Processing |
 
+---
+
 ## ✨ Features
 
-- **Monte Carlo Simulation** — Geometric Brownian Motion path generation
+- **Monte Carlo Simulation** — Geometric Brownian Motion path generation with antithetic variates
 - **Asian Option Pricing** — Arithmetic-average call and put
-- **Barrier Option Pricing** — Down-and-Out, Down-and-In, Up-and-Out, Up-and-In
+- **Barrier Option Pricing** — Down-and-Out, Down-and-In, Up-and-Out, Up-and-In (call & put)
 - **Lookback Option Pricing** — Floating-strike call and put
 - **Greeks Calculation** — Delta, Gamma, Vega via central finite differences
 - **Black-Scholes Validation** — Verify MC engine against analytical solution
@@ -22,67 +32,91 @@ A complete quantitative finance project that prices exotic options (Asian, Barri
 - **Sensitivity Analysis** — Price vs spot, volatility, maturity
 - **Convergence Analysis** — MC estimation error vs simulation count
 - **CSV Export** — Download all results and simulated paths
-- **Historical Data Support** — Upload CSV from NSE/Yahoo Finance
+- **Historical Data Support** — Upload CSV from NSE India / Yahoo Finance
+
+---
 
 ## 📁 Project Structure
 
 ```
 exotic_option_pricing/
-├── app.py                    # Streamlit dashboard (main entry point)
-├── requirements.txt          # Python dependencies
-├── README.md                 # This file
 │
-├── src/                      # Core modules
-│   ├── __init__.py
-│   ├── simulation.py         # GBM path generation engine
-│   ├── asian_option.py       # Asian option pricing
-│   ├── barrier_option.py     # Barrier option pricing
-│   ├── lookback_option.py    # Lookback option pricing
-│   ├── greeks.py             # Greeks (Delta, Gamma, Vega)
-│   ├── data_processing.py    # CSV loading & parameter estimation
-│   └── validation.py         # Black-Scholes validation
+├── app.py                        # Streamlit dashboard (main entry point)
+├── requirements.txt              # Python dependencies
+├── README.md                     # This file
+├── LICENSE                       # MIT License
+│
+├── src/                          # Core pricing modules
+│   ├── __init__.py               # Package exports
+│   ├── simulation.py             # GBM path generation engine
+│   ├── asian_option.py           # Asian option pricing
+│   ├── barrier_option.py         # Barrier option pricing
+│   ├── lookback_option.py        # Lookback option pricing
+│   ├── greeks.py                 # Greeks (Delta, Gamma, Vega)
+│   ├── data_processing.py        # CSV loading & volatility estimation
+│   └── validation.py             # Black-Scholes validation & convergence
 │
 ├── data/
-│   └── sample_prices.csv     # Sample synthetic price data
+│   └── sample_prices.csv         # Sample synthetic price data (for testing)
 │
-├── tests/                    # Test suite
-│   ├── test_simulation.py
-│   ├── test_options.py
-│   └── test_greeks.py
+├── tests/                        # Unit test suite (36 tests)
+│   ├── __init__.py
+│   ├── test_simulation.py        # GBM path tests
+│   ├── test_options.py           # Option pricing tests
+│   └── test_greeks.py            # Greeks calculation tests
 │
-└── reports/
-    ├── project_report.md     # Academic project report
-    └── presentation_outline.md
+└── reports/                      # Academic documentation
+    ├── project_report.md         # Full project report (21 sections)
+    └── presentation_outline.md   # 25-slide outline + viva Q&A
 ```
 
-## 🚀 Installation & Setup
+---
+
+## 🚀 Installation & Usage
 
 ### Prerequisites
+
 - Python 3.8 or higher
 - pip (Python package manager)
 
-### Steps
+### Setup
 
 ```bash
-# 1. Navigate to the project directory
-cd exotic_option_pricing
+# Clone the repository
+git clone https://github.com/<your-username>/exotic-option-pricing.git
+cd exotic-option-pricing
 
-# 2. Install dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-# 3. Run the dashboard
+# Launch the dashboard
 streamlit run app.py
-
-# 4. Open browser at http://localhost:8501
 ```
 
-## 🧪 Running Tests
+The dashboard will open at **http://localhost:8501**
+
+### Running Tests
 
 ```bash
-cd exotic_option_pricing
-pip install pytest
 python -m pytest tests/ -v
 ```
+
+---
+
+## 📊 Dashboard Pages
+
+| Page | Description |
+|------|-------------|
+| 🏠 **Home** | Project overview, abstract, team members |
+| 📊 **Market Data** | Upload historical CSV, estimate volatility |
+| 💰 **Option Pricing** | Configure parameters, run Monte Carlo simulation |
+| 📈 **Risk Analysis** | Calculate and display Delta, Gamma, Vega |
+| 📉 **Sensitivity** | Price sensitivity to spot, volatility, maturity |
+| 🔄 **Comparison** | Side-by-side comparison of all option types |
+| ✅ **Validation** | Black-Scholes benchmark convergence proof |
+| 📥 **Export** | Download all results as CSV |
+
+---
 
 ## 📖 Mathematical Background
 
@@ -90,54 +124,82 @@ python -m pytest tests/ -v
 
 $$S(t+\Delta t) = S(t) \cdot \exp\left[\left(r - \frac{\sigma^2}{2}\right)\Delta t + \sigma\sqrt{\Delta t}\, Z\right]$$
 
+where $Z \sim \mathcal{N}(0,1)$, $r$ is the risk-free rate, and $\sigma$ is the volatility.
+
 ### Monte Carlo Estimator
 
-$$\hat{V} = e^{-rT} \cdot \frac{1}{N}\sum_{i=1}^{N} \text{Payoff}_i$$
+$$\hat{V} = e^{-rT} \cdot \frac{1}{N}\sum_{i=1}^{N} \text{Payoff}_i \quad \pm \quad 1.96 \times \frac{\hat{\sigma}}{\sqrt{N}}$$
 
 ### Option Payoffs
 
-| Option | Call Payoff | Put Payoff |
-|--------|------------|------------|
-| **Asian** | max(Avg(S) - K, 0) | max(K - Avg(S), 0) |
-| **Barrier (D&O)** | max(S_T - K, 0) · I[min(S) > B] | max(K - S_T, 0) · I[min(S) > B] |
-| **Lookback** | S_T - S_min | S_max - S_T |
+| Option Type | Call Payoff | Put Payoff |
+|-------------|------------|------------|
+| **Asian** (arithmetic avg.) | $\max(\bar{S} - K,\; 0)$ | $\max(K - \bar{S},\; 0)$ |
+| **Barrier** (down-and-out) | $\max(S_T - K,\; 0) \cdot \mathbf{1}[\min S > B]$ | $\max(K - S_T,\; 0) \cdot \mathbf{1}[\min S > B]$ |
+| **Lookback** (floating strike) | $S_T - S_{\min}$ | $S_{\max} - S_T$ |
 
-### Greeks (Finite Differences)
+### Greeks (Central Finite Differences)
 
-| Greek | Formula |
-|-------|---------|
-| Delta | [V(S+h) - V(S-h)] / (2h) |
-| Gamma | [V(S+h) - 2V(S) + V(S-h)] / h² |
-| Vega | [V(σ+ε) - V(σ-ε)] / (2ε) |
+| Greek | Formula | Interpretation |
+|-------|---------|----------------|
+| **Delta (Δ)** | $\frac{V(S+h) - V(S-h)}{2h}$ | Price sensitivity to spot |
+| **Gamma (Γ)** | $\frac{V(S+h) - 2V(S) + V(S-h)}{h^2}$ | Curvature of Delta |
+| **Vega (ν)** | $\frac{V(\sigma+\varepsilon) - V(\sigma-\varepsilon)}{2\varepsilon}$ | Sensitivity to volatility |
 
-## 🛠️ Technologies
+---
 
-- **Python** — Programming language
-- **NumPy** — Numerical computation & simulation
-- **Pandas** — Data processing
-- **SciPy** — Statistical functions (normal CDF for Black-Scholes)
-- **Plotly** — Interactive visualizations
-- **Streamlit** — Web dashboard framework
+## 🛠️ Technology Stack
 
-## 📊 Dashboard Pages
+| Technology | Purpose |
+|------------|---------|
+| **Python** | Programming language |
+| **NumPy** | Numerical computation & simulation |
+| **Pandas** | Data processing & CSV handling |
+| **SciPy** | Statistical functions (normal CDF for Black-Scholes) |
+| **Plotly** | Interactive visualizations |
+| **Streamlit** | Web dashboard framework |
 
-1. **🏠 Home** — Project overview, team, and exotic options introduction
-2. **📊 Market Data** — Upload CSV, estimate volatility from historical data
-3. **💰 Option Pricing** — Configure parameters and run Monte Carlo simulation
-4. **📈 Risk Analysis** — Calculate and display Greeks
-5. **📉 Sensitivity Analysis** — Price sensitivity to spot, vol, maturity
-6. **🔄 Option Comparison** — Side-by-side comparison of all option types
-7. **✅ Validation** — Black-Scholes benchmark comparison
-8. **📥 Export Results** — Download all results as CSV
+---
+
+## 📈 Sample Results
+
+Parameters: $S_0 = 100$, $K = 100$, $r = 5\%$, $\sigma = 20\%$, $T = 1$ year, $N = 10{,}000$
+
+| Option | Price | Std Error |
+|--------|-------|-----------|
+| Asian Call | 5.70 | 0.079 |
+| Asian Put | 3.44 | 0.054 |
+| Barrier Call (D&O, B=80) | 10.14 | 0.145 |
+| Lookback Call | 16.51 | 0.144 |
+| Lookback Put | 13.46 | 0.099 |
+| European Call (Black-Scholes) | 10.45 | — |
+
+**Price ordering:** Barrier < Asian < European < Lookback ✅
+
+---
 
 ## ⚠️ Disclaimer
 
 - Simulated prices are **NOT** predictions of future market prices.
-- Sample data is **synthetic** (generated via GBM), not real market data.
-- This project is for **educational purposes** only.
-- The GBM model assumes constant volatility and no dividends.
+- Sample data (`data/sample_prices.csv`) is **synthetic** (GBM-generated), not real market data.
+- This project is for **educational and academic purposes** only.
+- The GBM model assumes constant volatility, no dividends, and continuous trading.
+
+---
+
+## 📚 References
+
+1. Black, F., & Scholes, M. (1973). *The Pricing of Options and Corporate Liabilities.* Journal of Political Economy.
+2. Boyle, P. P. (1977). *Options: A Monte Carlo Approach.* Journal of Financial Economics.
+3. Hull, J. C. (2018). *Options, Futures, and Other Derivatives* (10th ed.). Pearson.
+4. Glasserman, P. (2003). *Monte Carlo Methods in Financial Engineering.* Springer.
+
+---
 
 ## 📜 License
 
-MIT License — Free for educational and academic use.
+This project is licensed under the [MIT License](LICENSE).
 
+---
+
+*Developed by Sayan Goswami, Sovan Pal, and Tanmoy Paul.*
