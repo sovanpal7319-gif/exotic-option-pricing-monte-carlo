@@ -190,5 +190,3 @@ Parameters: $S_0 = 100$, $K = 100$, $r = 5\%$, $\sigma = 20\%$, $T = 1$ year, $N
 This project is licensed under the [MIT License](LICENSE).
 
 ---
-
-*Developed by Sayan Goswami, Sovan Pal, and Tanmoy Paul.*
