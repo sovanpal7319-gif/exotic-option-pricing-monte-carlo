@@ -8,17 +8,6 @@
 
 A complete quantitative finance project that prices exotic options (Asian, Barrier, Lookback) using Monte Carlo simulation, analyzes risk through Greeks, and provides an interactive Streamlit dashboard.
 
----
-
-## 👥 Team Members
-
-| Name | Role |
-|------|------|
-| **Sayan Goswami** | Core Simulation & Option Pricing |
-| **Sovan Pal** | Greeks, Validation & Risk Analysis |
-| **Tanmoy Paul** | Dashboard, Visualization & Data Processing |
-
----
 
 ## ✨ Features
 
